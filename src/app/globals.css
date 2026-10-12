@@ -1,26 +1,209 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+ * MonaCare Visual Identity Guidelines v1.0 (Sept 2026).
+ * Palette: Deep Teal leads, Warm Gold stays a small accent, no colours outside the palette and approved tints.
+ * Type: Nunito Sans SemiBold (headlines, names, navigation), Jost Regular (body, captions, labels, data).
+ */
+@theme {
+  --color-teal: #0e6679;
+  --color-teal-80: #3e8594;
+  --color-teal-60: #6ea3af;
+  --color-teal-40: #9fc2c9;
+  --color-teal-20: #cfe0e4;
+  --color-teal-10: #e7f0f2;
+  --color-gold: #f4a01e;
+  --color-gold-40: #fbd9a5;
+  --color-gold-20: #fdecd2;
+  --color-offwhite: #faf5df;
+  --color-white: #ffffff;
+
+  --font-head: "Nunito Sans Variable", "Nunito Sans", "Avenir Next", Arial, sans-serif;
+  --font-body: "Jost Variable", "Jost", "Futura", "Century Gothic", sans-serif;
+
+  --ease-calm: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-offwhite);
+  color: var(--color-teal);
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-gold-40);
+  color: var(--color-teal);
+}
+
+/* Focus: 3 px Deep Teal outline, 3 px offset. Off-White on teal surfaces. */
+:focus-visible {
+  outline: 3px solid var(--color-teal);
+  outline-offset: 3px;
+}
+.on-teal :focus-visible {
+  outline-color: var(--color-offwhite);
+}
+
+/* ── Type hierarchy (screen sizes from the guidelines) ── */
+@utility type-display {
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 2.5rem;
+  line-height: 2.875rem;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+  @media (width >= 64rem) {
+    font-size: 4rem;
+    line-height: 4.375rem;
+  }
+}
+
+@utility type-h1 {
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 2rem;
+  line-height: 2.5rem;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  @media (width >= 64rem) {
+    font-size: 2.75rem;
+    line-height: 3.25rem;
+  }
+}
+
+@utility type-h2 {
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  text-wrap: balance;
+  @media (width >= 64rem) {
+    font-size: 1.75rem;
+    line-height: 2.25rem;
+  }
+}
+
+@utility type-label {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  line-height: 1.25rem;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+@utility type-caption {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+/* Gold thread: a short gold rule that marks headings and key moments. Gold's only role as a line. */
+@utility gold-thread {
+  display: block;
+  width: 3.5rem;
+  height: 2px;
+  background: var(--color-gold);
+}
+
+/* Links: Deep Teal, always underlined. */
+@utility link {
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.3em;
+  transition: text-decoration-thickness 200ms var(--ease-calm), text-underline-offset 200ms var(--ease-calm);
+  &:hover {
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.22em;
+  }
+}
+
+/* Buttons: Deep Teal, Off-White text, 8 px radius. */
+@utility btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  padding: 0.875rem 1.75rem;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.5rem;
+  white-space: nowrap;
+  transition: background-color 250ms var(--ease-calm), color 250ms var(--ease-calm), transform 150ms var(--ease-calm);
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+/* One orchestrated entrance on the hero; everything else is still. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes settle {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .rise {
+    animation: rise 900ms var(--ease-calm) both;
+    animation-delay: var(--d, 0ms);
+  }
+  .settle {
+    animation: settle 1400ms var(--ease-calm) both;
+    animation-delay: var(--d, 0ms);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ── Loading screen on every initial load (see components/Intro.tsx) ── */
+html:not([data-intro="show"]) .intro {
+  display: none;
+}
+html[data-intro="show"] {
+  overflow: hidden;
+}
+
+/* ── Booking modal (see components/BookingModal.tsx) ── */
+html:has(dialog.booking[open]) {
+  overflow: hidden;
+}
+@media (prefers-reduced-motion: no-preference) {
+  dialog.booking[open] {
+    animation: rise 400ms var(--ease-calm) both;
+  }
+  dialog.booking[open]::backdrop {
+    animation: fade 300ms ease-out both;
+  }
+}
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
 }
