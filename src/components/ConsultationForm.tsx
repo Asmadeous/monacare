@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useId, useState, type FormEvent } from "react";
 import { CaretDown, Check } from "@phosphor-icons/react";
 import { services } from "@/content/site";
 
@@ -12,6 +12,9 @@ const label = "font-[family-name:var(--font-head)] text-[15px] font-semibold tex
 
 export default function ConsultationForm({ interest = "", onClose }: { interest?: string; onClose?: () => void }) {
   const [state, setState] = useState<State>("idle");
+  // Several booking forms can exist at once (modal + morphing dialogs), so ids must be unique
+  const uid = useId();
+  const fid = (name: string) => `${uid}-${name}`;
   const [error, setError] = useState("");
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
@@ -57,25 +60,25 @@ export default function ConsultationForm({ interest = "", onClose }: { interest?
     <form onSubmit={onSubmit} className="grid gap-6">
       <div className="grid gap-6 sm:grid-cols-2">
         <div className="grid gap-2">
-          <label htmlFor="name" className={label}>Full name</label>
-          <input id="name" name="name" required autoComplete="name" autoFocus className={field} />
+          <label htmlFor={fid("name")} className={label}>Full name</label>
+          <input id={fid("name")} name="name" required autoComplete="name" autoFocus className={field} />
         </div>
         <div className="grid gap-2">
-          <label htmlFor="email" className={label}>Email</label>
-          <input id="email" name="email" type="email" required autoComplete="email" className={field} />
+          <label htmlFor={fid("email")} className={label}>Email</label>
+          <input id={fid("email")} name="email" type="email" required autoComplete="email" className={field} />
         </div>
       </div>
       <div className="grid gap-6">
         <div className="grid gap-2">
-          <label htmlFor="organisation" className={label}>
+          <label htmlFor={fid("organisation")} className={label}>
             Organisation <span className="font-[family-name:var(--font-body)] font-normal">(optional)</span>
           </label>
-          <input id="organisation" name="organisation" autoComplete="organization" className={field} />
+          <input id={fid("organisation")} name="organisation" autoComplete="organization" className={field} />
         </div>
         <div className="grid gap-2">
-          <label htmlFor="interest" className={label}>Area of interest</label>
+          <label htmlFor={fid("interest")} className={label}>Area of interest</label>
           <div className="relative">
-            <select id="interest" name="interest" defaultValue={interest} required className={`${field} appearance-none pr-10`}>
+            <select id={fid("interest")} name="interest" defaultValue={interest} required className={`${field} appearance-none pr-10`}>
               <option value="" disabled>Choose a programme</option>
               {services.items.map((s) => (
                 <option key={s.slug}>{s.title}</option>
@@ -86,10 +89,10 @@ export default function ConsultationForm({ interest = "", onClose }: { interest?
         </div>
       </div>
       <div className="grid gap-2">
-        <label htmlFor="message" className={label}>
+        <label htmlFor={fid("message")} className={label}>
           About your organisation <span className="font-[family-name:var(--font-body)] font-normal">(optional)</span>
         </label>
-        <textarea id="message" name="message" rows={3} className={`${field} resize-y`} />
+        <textarea id={fid("message")} name="message" rows={3} className={`${field} resize-y`} />
       </div>
       {/* honeypot */}
       <input type="text" name="company_site" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden />

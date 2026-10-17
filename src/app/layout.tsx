@@ -1,11 +1,14 @@
 import type { Metadata, Viewport } from "next";
 import "@fontsource-variable/nunito-sans/wght.css";
 import "@fontsource-variable/jost/wght.css";
+import "lenis/dist/lenis.css";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BookingModal from "@/components/BookingModal";
 import Intro from "@/components/Intro";
+import MotionProvider from "@/components/MotionProvider";
+import SmoothScroll from "@/components/SmoothScroll";
 import { introBootScript } from "@/components/introBoot";
 
 export const metadata: Metadata = {
@@ -45,11 +48,15 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         >
           Skip to content
         </a>
-        <Header />
-        <main id="main">{children}</main>
-        <Footer />
-        <BookingModal />
-        <Intro />
+        <MotionProvider>
+          <SmoothScroll>
+            <Header />
+            <main id="main" tabIndex={-1} className="outline-none">{children}</main>
+            <Footer />
+            <BookingModal />
+            <Intro />
+          </SmoothScroll>
+        </MotionProvider>
       </body>
     </html>
   );

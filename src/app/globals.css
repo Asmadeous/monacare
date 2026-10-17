@@ -25,11 +25,13 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* No CSS scroll-behavior: smooth. Lenis (components/SmoothScroll.tsx) does the smoothing; both together fight */
   scroll-padding-top: 6rem;
 }
 
 body {
+  /* Never scroll sideways. clip (not hidden) so position: sticky keeps working */
+  overflow-x: clip;
   background: var(--color-offwhite);
   color: var(--color-teal);
   font-family: var(--font-body);
@@ -182,11 +184,33 @@ body {
   }
 }
 
+/* ── Reviews (components/Testimonials.tsx): moving content can be paused (WCAG 2.2.2) ── */
+@keyframes reviews-scroll {
+  to {
+    transform: translateY(-50%);
+  }
+}
+.reviews-column {
+  animation: reviews-scroll linear infinite;
+}
+.reviews:hover .reviews-column,
+.reviews:focus-within .reviews-column,
+.reviews[data-paused="true"] .reviews-column {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reviews-column {
+    animation: none;
+  }
+}
+
 /* ── Loading screen on every initial load (see components/Intro.tsx) ── */
-html:not([data-intro="show"]) .intro {
+/* "opening": the two sheets are pulling apart and the page underneath begins its entrance */
+html:not([data-intro="show"]):not([data-intro="opening"]) .intro {
   display: none;
 }
-html[data-intro="show"] {
+html[data-intro="show"],
+html[data-intro="opening"] {
   overflow: hidden;
 }
 

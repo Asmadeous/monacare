@@ -16,6 +16,17 @@ export const images = {
   children: u("photo-1758525861742-fef623c2ad2d", 1600),
 };
 
+// Hero background video, supplied by the client with their hero spec (a city skyline over a park, no
+// people). Hosted on the client's CDN; the still in /public is its first frame, shown while it loads.
+export const heroVideo = {
+  sources: [
+    {
+      src: "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260403_050628_c4e32401-fab4-4a27-b7a8-6e9291cd5959.mp4",
+    },
+  ],
+  poster: "/hero-poster.jpg",
+};
+
 export const site = {
   name: "MonaCare",
   legalName: "MonaCare Ltd",
@@ -23,6 +34,7 @@ export const site = {
     "Empowering excellence in social care through cultural competence and trauma-informed approaches.",
   proposition: "Expertise with heart.",
   cta: { label: "Book a consultation", href: "#book" },
+  email: "info@monacare.co.uk",
   nav: [
     { label: "Home", href: "/" },
     { label: "Services", href: "/services" },
@@ -36,6 +48,9 @@ export const hero = {
   title: "Excellence in care, expertise in compliance.",
   sub: "Empowering excellence in social care through cultural competence and trauma-informed approaches.",
   secondary: { label: "Our services", href: "/services" },
+  // Heading over the four ways in (Home, pinned columns)
+  indexLabel: "Ways in",
+  indexTitle: "Four ways to start working with MonaCare",
   imageAlt: "Three women in conversation around a laptop in a bright sitting room",
   index: [
     {
@@ -60,6 +75,13 @@ export const hero = {
     },
   ],
 };
+
+// Key facts, from the original monacare.co.uk ("20+ years", "5 specialist programmes", "6 sectors served")
+export const facts = [
+  { value: 20, suffix: "+", label: "Years in the care sector" },
+  { value: 5, suffix: "", label: "Specialist programmes" },
+  { value: 6, suffix: "", label: "Sectors served" },
+];
 
 export const welcome =
   "Welcome to MonaCare. We guide care organisations through Ofsted and CQC compliance, with trauma-informed practice and cultural competence at the heart of every service.";
@@ -93,7 +115,7 @@ export type TeamMember = {
   imageAlt: string;
   summary: string;
   paragraphs: string[];
-  roles: { title: string; org: string }[];
+  roles: { title: string; org: string; detail?: string }[];
 };
 
 // Add new people to `members`. The first member is featured; everyone after appears in the grid.
@@ -115,9 +137,21 @@ export const team = {
         "Her expertise extends to business mentorship, particularly empowering Black entrepreneurs in social care. Sharon serves as a Panel Adviser at Swindon Foster Panel and Funding Manager at DADA, bridging gaps between ethnic communities and mainstream services.",
       ],
       roles: [
-        { title: "Registered Manager", org: "Brighter Beginnings" },
-        { title: "Panel Adviser", org: "Swindon Foster Panel" },
-        { title: "Funding Manager", org: "DADA" },
+        // Details are from Sharon's bio. TODO: add dates from the client to make this a true timeline.
+        {
+          title: "Registered Manager",
+          org: "Brighter Beginnings",
+          detail: "Leading a children's home and pioneering residential care strategies that promote healing for trauma-affected young people.",
+        },
+        {
+          title: "Panel Adviser",
+          org: "Swindon Foster Panel",
+        },
+        {
+          title: "Funding Manager",
+          org: "DADA",
+          detail: "Bridging gaps between ethnic communities and mainstream services.",
+        },
       ],
     },
   ] satisfies TeamMember[],
@@ -251,6 +285,8 @@ export const consultation = {
 };
 
 export const donate = {
+  label: "Donate",
+  imageAlt: "Three women from the community laughing together outdoors",
   title: "Support us for a better tomorrow",
   body: "Your donation supports our mission to enhance care services for diverse communities, so every child and family receives care that is safe, inclusive and healing.",
   cta: "Donate",
