@@ -75,7 +75,7 @@ export function ConsultationTicket({
             </ul>
             <p className="mt-4 flex flex-wrap items-center gap-x-6 border-t border-offwhite/20 pt-4">
               <span className="type-label">Open {site.hours}</span>
-              <a href={`tel:${site.phone.replace(/[^\d+]/g, "")}`} className="link inline-flex min-h-11 items-center">
+              <a href={`tel:${site.phoneTel}`} className="link inline-flex min-h-11 items-center">
                 {site.phone}
               </a>
             </p>

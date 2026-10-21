@@ -36,7 +36,9 @@ export const site = {
   proposition: "Expertise with heart.",
   cta: { label: "Book a consultation", href: "#book" },
   email: "info@monacare.co.uk",
-  phone: "(077) 304-8035",
+  phone: "07730 480358",
+  phoneTel: "+447730480358", // for tel: links
+  whatsapp: "https://wa.me/447730480358", // same number on WhatsApp
   hours: "8am-7pm",
   nav: [
     { label: "Home", href: "/" },
@@ -312,6 +314,14 @@ export const testimonials = {
 
 // Company details for the footer and legal pages. Empty values were not provided in the client form;
 // they still show, with their label, so they can be filled in later.
+// Social links. Empty ones show as placeholders until the client sends the address.
+export const social = [
+  { label: "WhatsApp", href: site.whatsapp, icon: "whatsapp" },
+  { label: "Call", href: `tel:${site.phoneTel}`, icon: "phone" },
+  { label: "Facebook", href: "", icon: "facebook" },
+  { label: "X (Twitter)", href: "", icon: "x" },
+] as const;
+
 export const company = {
   number: "",
   registeredOffice: "",

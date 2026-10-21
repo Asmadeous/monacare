@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { site } from "@/content/site";
+import { SocialLinks } from "./SocialLinks";
 import { wrap } from "./ui";
 
 const legal = [
@@ -26,10 +27,11 @@ export default function Footer() {
             <a href={`mailto:${site.email}`} className="link mt-1 flex min-h-11 items-center text-[1.125rem]">
               {site.email}
             </a>
-            <a href={`tel:${site.phone.replace(/[^\d+]/g, "")}`} className="link flex min-h-11 items-center text-[1.125rem]">
+            <a href={`tel:${site.phoneTel}`} className="link flex min-h-11 items-center text-[1.125rem]">
               {site.phone}
             </a>
             <p className="type-caption mt-1">Open {site.hours}</p>
+            <SocialLinks className="mt-5" />
           </div>
         </div>
         <div className="type-caption mt-12 grid gap-4 border-t border-offwhite/25 py-6 md:mt-14 md:grid-cols-12 md:gap-x-6">

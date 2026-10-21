@@ -48,7 +48,7 @@ export default function BookButton({
             <p className="type-caption mt-1">Sixty minutes with a specialist. We reply within one working day.</p>
             <p className="type-caption mt-1">
               Open {site.hours}. Prefer to call?{" "}
-              <a href={`tel:${site.phone.replace(/[^\d+]/g, "")}`} className="link">
+              <a href={`tel:${site.phoneTel}`} className="link">
                 {site.phone}
               </a>
             </p>

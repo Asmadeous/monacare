@@ -18,6 +18,7 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import BookButton from "./BookButton";
 import { site } from "@/content/site";
+import { SocialLinks } from "./SocialLinks";
 
 const POWER4_IN_OUT: [number, number, number, number] = [0.77, 0, 0.175, 1];
 
@@ -169,10 +170,11 @@ export default function Header() {
                   <a href={`mailto:${site.email}`} className="link mt-2 flex min-h-11 items-center text-[1.125rem]">
                     {site.email}
                   </a>
-                  <a href={`tel:${site.phone.replace(/[^\d+]/g, "")}`} className="link flex min-h-11 items-center text-[1.125rem]">
+                  <a href={`tel:${site.phoneTel}`} className="link flex min-h-11 items-center text-[1.125rem]">
                     {site.phone}
                   </a>
                   <p className="type-caption mt-1">Open {site.hours}</p>
+                  <SocialLinks className="mt-5" />
                 </motion.div>
               </div>
             </div>

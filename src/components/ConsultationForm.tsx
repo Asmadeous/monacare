@@ -1,8 +1,8 @@
 "use client";
 
 import { useId, useState, type FormEvent } from "react";
-import { CaretDown, Check } from "@phosphor-icons/react";
-import { services } from "@/content/site";
+import { CaretDown, Check, EnvelopeSimple, WhatsappLogo } from "@phosphor-icons/react";
+import { services, site } from "@/content/site";
 
 type State = "idle" | "sending" | "sent" | "error";
 
@@ -16,12 +16,15 @@ export default function ConsultationForm({ interest = "", onClose }: { interest?
   const uid = useId();
   const fid = (name: string) => `${uid}-${name}`;
   const [error, setError] = useState("");
+  // When online delivery isn't available: the same request, ready to send on WhatsApp or by email
+  const [fallback, setFallback] = useState<{ whatsapp: string; mailto: string } | null>(null);
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setState("sending");
     setError("");
-    const data = Object.fromEntries(new FormData(e.currentTarget));
+    setFallback(null);
+    const data = Object.fromEntries(new FormData(e.currentTarget)) as Record<string, string>;
     try {
       const res = await fetch("/api/consultation", {
         method: "POST",
@@ -29,6 +32,23 @@ export default function ConsultationForm({ interest = "", onClose }: { interest?
         body: JSON.stringify(data),
       });
       const json = await res.json();
+      if (json.fallback) {
+        const text = [
+          "Hello MonaCare, I'd like to book a consultation.",
+          `Name: ${data.name}`,
+          `Email: ${data.email}`,
+          data.phone && `Phone: ${data.phone}`,
+          data.organisation && `Organisation: ${data.organisation}`,
+          data.interest && `Area of interest: ${data.interest}`,
+          data.message,
+        ]
+          .filter(Boolean)
+          .join("\n");
+        setFallback({
+          whatsapp: `${site.whatsapp}?text=${encodeURIComponent(text)}`,
+          mailto: `mailto:${site.email}?subject=${encodeURIComponent("Consultation request")}&body=${encodeURIComponent(text)}`,
+        });
+      }
       if (!res.ok) throw new Error(json.error || "We couldn't send your request. Please try again.");
       setState("sent");
     } catch (err) {
@@ -68,13 +88,21 @@ export default function ConsultationForm({ interest = "", onClose }: { interest?
           <input id={fid("email")} name="email" type="email" required autoComplete="email" className={field} />
         </div>
       </div>
-      <div className="grid gap-6">
+      <div className="grid gap-6 sm:grid-cols-2">
+        <div className="grid gap-2">
+          <label htmlFor={fid("phone")} className={label}>
+            Phone <span className="font-[family-name:var(--font-body)] font-normal">(optional)</span>
+          </label>
+          <input id={fid("phone")} name="phone" type="tel" autoComplete="tel" className={field} />
+        </div>
         <div className="grid gap-2">
           <label htmlFor={fid("organisation")} className={label}>
             Organisation <span className="font-[family-name:var(--font-body)] font-normal">(optional)</span>
           </label>
           <input id={fid("organisation")} name="organisation" autoComplete="organization" className={field} />
         </div>
+      </div>
+      <div className="grid gap-6">
         <div className="grid gap-2">
           <label htmlFor={fid("interest")} className={label}>Area of interest</label>
           <div className="relative">
@@ -98,9 +126,19 @@ export default function ConsultationForm({ interest = "", onClose }: { interest?
       <input type="text" name="company_site" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden />
 
       {state === "error" && (
-        <p className="rounded-[8px] border border-teal bg-white px-4 py-3 text-teal" role="alert">
-          {error}
-        </p>
+        <div className="rounded-[8px] border border-teal bg-white px-4 py-3 text-teal" role="alert">
+          <p>{error}</p>
+          {fallback && (
+            <div className="mt-4 flex flex-wrap gap-3">
+              <a href={fallback.whatsapp} target="_blank" rel="noopener noreferrer" className="btn gap-2 bg-teal text-offwhite hover:bg-teal-80">
+                <WhatsappLogo size={20} aria-hidden /> Send on WhatsApp
+              </a>
+              <a href={fallback.mailto} className="btn gap-2 border border-teal text-teal hover:bg-teal-10">
+                <EnvelopeSimple size={20} aria-hidden /> Send by email
+              </a>
+            </div>
+          )}
+        </div>
       )}
 
       <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-4 pt-2">
