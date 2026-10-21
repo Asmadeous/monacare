@@ -68,6 +68,24 @@ export default function ServicesPage() {
                 <FadeInUp order={2} as="p" className="mt-6 max-w-[56ch] text-teal">
                   {s.body}
                 </FadeInUp>
+                <FadeInUp order={3}>
+                  <dl className="mt-8 grid gap-x-6 border-t border-teal-20 text-[1rem] leading-[1.625rem] text-teal sm:grid-cols-[10rem_1fr]">
+                    {[
+                      ["Who it's for", s.audience],
+                      ["Format", s.formats.join(", ")],
+                      ["Typical length", s.length],
+                      ...(s.sessions ? [["Sessions", s.sessions]] : []),
+                      ...(s.dates ? [["Dates", s.dates]] : []),
+                      ["Price", s.price],
+                      ["You come away with", s.outcomes],
+                    ].map(([k, v]) => (
+                      <div key={k} className="contents">
+                        <dt className="type-label border-b border-teal-20 pb-2 pt-3 sm:py-3">{k}</dt>
+                        <dd className="border-b border-teal-20 pb-3 sm:pt-3">{v}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </FadeInUp>
               </div>
             </li>
           ))}

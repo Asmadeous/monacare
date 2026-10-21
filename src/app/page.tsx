@@ -54,6 +54,8 @@ export default function Home() {
         title={consultation.title}
         intro={consultation.intro}
         includes={consultation.includes}
+        price={consultation.price}
+        delivery={consultation.delivery}
         action={<BookButton variant="light">{site.cta.label}</BookButton>}
       />
 

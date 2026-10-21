@@ -1,5 +1,6 @@
 "use client";
 
+import { site } from "@/content/site";
 import ConsultationForm from "./ConsultationForm";
 import {
   MorphingDialog,
@@ -45,6 +46,12 @@ export default function BookButton({
               <h2 className="type-h2">Request a consultation</h2>
             </MorphingDialogTitle>
             <p className="type-caption mt-1">Sixty minutes with a specialist. We reply within one working day.</p>
+            <p className="type-caption mt-1">
+              Open {site.hours}. Prefer to call?{" "}
+              <a href={`tel:${site.phone.replace(/[^\d+]/g, "")}`} className="link">
+                {site.phone}
+              </a>
+            </p>
           </div>
           <div className="px-6 py-8 sm:px-10 sm:py-10">
             <FormWithClose interest={interest} />

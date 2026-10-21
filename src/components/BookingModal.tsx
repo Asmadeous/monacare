@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { X } from "@phosphor-icons/react";
+import { site } from "@/content/site";
 import ConsultationForm from "./ConsultationForm";
 
 /**
@@ -46,6 +47,12 @@ export default function BookingModal() {
         <div>
           <h2 id="booking-title" className="type-h2">Request a consultation</h2>
           <p className="type-caption mt-1">Sixty minutes with a specialist. We reply within one working day.</p>
+          <p className="type-caption mt-1">
+            Open {site.hours}. Prefer to call?{" "}
+            <a href={`tel:${site.phone.replace(/[^\d+]/g, "")}`} className="link">
+              {site.phone}
+            </a>
+          </p>
         </div>
         <button
           type="button"

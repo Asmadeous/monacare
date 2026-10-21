@@ -7,13 +7,13 @@ const u = (id: string, w = 2000) =>
   `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=80`;
 
 export const images = {
-  hero: u("photo-1655720357872-ce227e4164ba", 1600),
-  about: u("photo-1573164574397-dd250bc8a598", 1600),
-  // TODO: replace with Sharon Gitau's real portrait before launch
-  founder: u("photo-1573497019418-b400bb3ab074", 1400),
-  culture: u("photo-1630726410985-a1021e8a232a", 2400),
-  team: u("photo-1573497701240-345a300b8d36", 1600),
-  children: u("photo-1758525861742-fef623c2ad2d", 1600),
+  hero: u("photo-1690192522216-f71f9648653f", 1600),
+  about: u("photo-1554902748-feaf536fc594", 1600),
+  // Sharon Gitau's portrait, supplied by the client (decorative ring removed, cropped to 4:5)
+  founder: "/team/sharon-gitau.webp",
+  culture: u("photo-1765307639918-a99f7f3d9f75", 2400),
+  team: u("photo-1769740333462-9a63bfa914bc", 1600),
+  children: u("photo-1522881193457-37ae97c905bf", 1600),
 };
 
 // Hero background video, supplied by the client with their hero spec (a city skyline over a park, no
@@ -29,12 +29,15 @@ export const heroVideo = {
 
 export const site = {
   name: "MonaCare",
-  legalName: "MonaCare Ltd",
+  // Registered company (client form, Oct 2026). The brand stays MonaCare.
+  legalName: "SWTD Care and Consultancy",
   tagline:
     "Empowering excellence in social care through cultural competence and trauma-informed approaches.",
   proposition: "Expertise with heart.",
   cta: { label: "Book a consultation", href: "#book" },
   email: "info@monacare.co.uk",
+  phone: "(077) 304-8035",
+  hours: "8am-7pm",
   nav: [
     { label: "Home", href: "/" },
     { label: "Services", href: "/services" },
@@ -165,6 +168,14 @@ export const culture = {
 
 export type Service = {
   slug: string;
+  // From the client form (Oct 2026)
+  audience: string;
+  formats: string[];
+  length: string;
+  price: string;
+  outcomes: string;
+  sessions?: string;
+  dates?: string;
   title: string;
   short: string;
   body: string;
@@ -181,6 +192,11 @@ export const services = {
   items: [
     {
       slug: "ofsted-cqc-consultancy",
+      audience: "Care homes, local authorities, care entrepreneurs, charities and CICs setting up or improving a regulated service",
+      formats: ["Group workshop", "Online", "On-site"],
+      length: "1 to 4 hours",
+      price: "On request",
+      outcomes: "Strategies, policies and support plans for setting up and running care, with outcomes and certificates",
       title: "Ofsted and CQC consultancy setup",
       short: "Registration, documentation and best practice that help you exceed the standard.",
       body: "Expert guidance for care organisations seeking regulatory compliance. We simplify the registration process, prepare essential documentation, and implement best practices to help you exceed Ofsted and Care Quality Commission (CQC) standards.",
@@ -190,6 +206,11 @@ export const services = {
     },
     {
       slug: "trauma-recovery",
+      audience: "Professionals and parents working in the social care sector",
+      formats: ["One-to-one", "Online", "On-site"],
+      length: "1 to 2 hours",
+      price: "On request",
+      outcomes: "Outcomes, certificates and CPD accreditation",
       title: "Social care and trauma recovery",
       short: "Evidence-based approaches for safe, healing environments.",
       body: "Specialised training in evidence-based approaches for trauma-affected individuals. We equip care providers with methodologies to create safe, healing environments where children and families can recover and thrive.",
@@ -199,6 +220,11 @@ export const services = {
     },
     {
       slug: "cultural-competence",
+      audience: "Professionals and organisations growing their work with clients from different communities",
+      formats: ["Group workshop", "Online", "On-site"],
+      length: "1 to 4 hours",
+      price: "On request",
+      outcomes: "Outcomes, certificates and CPD",
       title: "Cultural competence and inclusion training",
       short: "Inclusive practice that bridges mainstream services and diverse communities.",
       body: "Practical training to enhance cultural sensitivity in care settings. We help organisations develop inclusive practices that bridge gaps between mainstream services and diverse communities.",
@@ -208,6 +234,11 @@ export const services = {
     },
     {
       slug: "mentorship-leadership",
+      audience: "Managers, Responsible Individuals and leaders in social care, team leaders who aspire to be managers, directors new to social care and owners opening children's homes",
+      formats: ["One-to-one", "Group workshop", "Online"],
+      length: "10 hours in total",
+      price: "On request",
+      outcomes: "Outcomes and certificates",
       title: "Mentorship and leadership development",
       short: "Leadership capacity and business acumen for the social care sector.",
       body: "Tailored coaching for care professionals and entrepreneurs. We build leadership capacity and business acumen specifically for the social care sector, emphasising sustainable growth strategies.",
@@ -216,6 +247,13 @@ export const services = {
     },
     {
       slug: "mindreset",
+      audience: "Young people, practitioners and leaders, teachers in schools and the social care sector, and leaders of charities",
+      formats: ["One-to-one", "Group workshop", "Online"],
+      length: "10 hours in total",
+      price: "On request",
+      outcomes: "Outcomes and certificates, working towards a CPD course",
+      sessions: "10 sessions",
+      dates: "To be confirmed",
       title: "MINDreSET programme",
       short: "Mindset and resilience for leaders in care.",
       body: "Our personal development programme for mindset and resilience. Participants learn practical techniques for overcoming challenges and achieving sustained success in professional contexts.",
@@ -272,10 +310,22 @@ export const testimonials = {
   ],
 };
 
+// Company details for the footer and legal pages. Empty values were not provided in the client form;
+// they still show, with their label, so they can be filled in later.
+export const company = {
+  number: "",
+  registeredOffice: "",
+  icoNumber: "",
+  privacyContact: "Sharon",
+  privacyEmail: "",
+};
+
 export const consultation = {
   label: "Start working with us",
   title: "The 60\u2011minute expert consultation",
   intro: "A focused hour with a specialist, and a clear view of where you stand and what to do next.",
+  price: "\u00a335",
+  delivery: "Online or in person",
   includes: [
     "Custom strategies for cultural competence implementation",
     "Personalised regulatory compliance guidance",

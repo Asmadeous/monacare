@@ -166,9 +166,13 @@ export default function Header() {
                 {/* Contact */}
                 <motion.div {...groupProps("contact")} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4, delay: t(1.6) }}>
                   <p className="type-label">Contact</p>
-                  <a href={`mailto:${site.email}`} className="link mt-2 inline-flex min-h-11 items-center text-[1.125rem]">
+                  <a href={`mailto:${site.email}`} className="link mt-2 flex min-h-11 items-center text-[1.125rem]">
                     {site.email}
                   </a>
+                  <a href={`tel:${site.phone.replace(/[^\d+]/g, "")}`} className="link flex min-h-11 items-center text-[1.125rem]">
+                    {site.phone}
+                  </a>
+                  <p className="type-caption mt-1">Open {site.hours}</p>
                 </motion.div>
               </div>
             </div>

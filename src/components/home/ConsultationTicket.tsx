@@ -10,6 +10,7 @@
 import { useRef } from "react";
 import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
 import { Check } from "@phosphor-icons/react";
+import { site } from "@/content/site";
 import { Label, wrap } from "../ui";
 
 export function ConsultationTicket({
@@ -17,12 +18,16 @@ export function ConsultationTicket({
   title,
   intro,
   includes,
+  price,
+  delivery,
   action,
 }: {
   label: string;
   title: string;
   intro: string;
   includes: string[];
+  price: string;
+  delivery: string;
   action: React.ReactNode;
 }) {
   const ref = useRef<HTMLElement>(null);
@@ -68,6 +73,12 @@ export function ConsultationTicket({
                 </li>
               ))}
             </ul>
+            <p className="mt-4 flex flex-wrap items-center gap-x-6 border-t border-offwhite/20 pt-4">
+              <span className="type-label">Open {site.hours}</span>
+              <a href={`tel:${site.phone.replace(/[^\d+]/g, "")}`} className="link inline-flex min-h-11 items-center">
+                {site.phone}
+              </a>
+            </p>
           </div>
 
           {/* Stub, behind a perforated tear line with notches cut from the card edge */}
@@ -78,6 +89,8 @@ export function ConsultationTicket({
               <p className="type-label">Expert consultation</p>
               <p className="mt-3 font-[family-name:var(--font-head)] text-[4.5rem] font-semibold leading-none tracking-[-0.02em]">60</p>
               <p className="type-label mt-3">Minutes with a specialist</p>
+              <p className="mt-5 font-[family-name:var(--font-head)] text-[1.75rem] font-semibold leading-none">{price}</p>
+              <p className="type-caption mt-2">{delivery}</p>
             </div>
             <div>{action}</div>
           </div>
